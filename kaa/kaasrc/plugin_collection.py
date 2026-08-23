@@ -61,8 +61,10 @@ class PluginCollection(object):
 
     # ---------------------------------------------------------------------------
     def importPlugin(self, package, ctrlVersion):
-        sys.path.append(os.path.join(os.path.dirname(package)))
-        useCase = str(os.path.join(os.path.dirname(package))).rsplit(os.sep, maxsplit=1)[-1]
+        pluginDir = os.path.join(os.path.dirname(package))
+        if pluginDir not in sys.path:
+            sys.path.append(pluginDir)
+        useCase = str(pluginDir).rsplit(os.sep, maxsplit=1)[-1]
         if (self.pluginsActive == "All") or (useCase in self.pluginsActive):
             if (self.pluginsDeactive == "") or (useCase not in self.pluginsDeactive):
                 pluginModule = __import__(os.path.basename(package).replace('.py', ''), fromlist=['blah'])
