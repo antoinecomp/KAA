@@ -8,7 +8,7 @@
 # ------------------------------------------------
 #  Chargement de l'environnement
 # ------------------------------------------------
-import json, os, copy, math
+import json, os, copy
 
 CLAVIER = False
 TUIVERSION = "25.04"
@@ -1146,8 +1146,6 @@ class TUI:
         #  - s.o. -
 
         # 2 - Traitement de la largeur
-        largeur = pElement['LARG']
-        #print("DBG:TAB>",self.blocs,largeur,pElement['COLON'])
         bloc = pElement['COLON'] if pElement['COLON'] is not None else 0
         espace = self.blocs[bloc][0]
 
@@ -1433,9 +1431,6 @@ class TUI:
         if len(texte) > 0:
             chaine.append(coulOffset + coulTexte)
             largElement.append(offset + len(texte))
-        lenEspace = 0
-        if len(options) > 10:
-            lenEspace = 1
         for i, _ in enumerate(options):
             espace = ''
             if len(options) > 10 > i:

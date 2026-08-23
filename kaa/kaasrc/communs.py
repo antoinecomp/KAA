@@ -20,12 +20,12 @@ except Exception as err:
 try:
     import torch
     ISTORCH = True
-except Exception as err:
+except Exception:
     ISTORCH = False
 # ---------
 try:
     from skimage.segmentation import watershed
-except Exception as err:
+except Exception:
     print("Package skimage is uninstalled.", "Error")
 # ---------
 

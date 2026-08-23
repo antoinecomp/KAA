@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 # ===============================================================================
 
+import os
+
 from kaasrc.communs import colPrint
 import kaasrc.plugin_collection
 

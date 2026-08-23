@@ -8,13 +8,13 @@ from kaasrc.communs import colPrint
 try:
     import tensorflow.python.framework.ops as eTensor
     ISTENSORFLOW = True
-except Exception as err:
+except Exception:
     ISTENSORFLOW = False
 # ---------
 try:
     import shap
     ISSHAP = True
-except Exception as err:
+except Exception:
     ISSHAP = False
 # ---------
 
@@ -404,7 +404,7 @@ def controlXAI_computeExplanationsOutputTabular(pOutputXAIFramework, pExplanatio
                 obtained = pExplanation[d].shape
                 controle(False, expected, obtained, forme, "controlXAI_computeExplanationsOutputTabular", pFile)
             else:
-                colprint(" --Cannot control the size of the data-- ", "Config")
+                colPrint(" --Cannot control the size of the data-- ", "Config")
 
 # -------------------------------------------------------------------------------
 ## Function to control XAI_computeExplanations output

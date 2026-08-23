@@ -96,7 +96,8 @@ class PluginCollection(object):
             self.plugins.append(c())
             self.dicoPlugins[c.__name__] = c()
         else:
-            print('\033[31m' + 'ERROR > incompatible library version: ' + pluginModule.versionPlugin + ' required.' + '\033[36m')
+            requiredVersion = getattr(pluginModule, 'versionPlugin', 'ND')
+            print('\033[31m' + 'ERROR > incompatible library version: ' + str(requiredVersion) + ' required.' + '\033[36m')
 
 # ===============================================================================
 # end of file
