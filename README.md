@@ -3,7 +3,7 @@ https://www.youtube.com/watch?v=2gflQEF1WQU
 
 <div>
     <a href="#">
-        <img src="https://img.shields.io/badge/Python-3.8-efefef">
+        <img src="https://img.shields.io/badge/Python-3.9--3.10-efefef">
     </a>
     <a href="#">
         <img src="https://img.shields.io/badge/License-apache2-efefef">
@@ -27,7 +27,7 @@ Full documentation can be found in `./documentation/Kaa_User_and_Integration_Man
 
 ## Quick Start
 
-**KAA** requires a version of python equal to 3.8 and several libraries including Tensorflow and Numpy. Installation can be done:
+**KAA** requires a version of python between 3.9 and 3.10 and several libraries including Tensorflow and Numpy. Installation can be done:
 
 1. using Pypi:
 
