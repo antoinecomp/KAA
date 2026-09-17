@@ -52,6 +52,9 @@ dependencies = [
     "cvxpy==1.5.2",
 ]
 
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
 [project.urls]
 Homepage = "https://github.com/IRT-Saint-Exupery/KAA"
 
@@ -61,3 +64,18 @@ include = ["kaa*"]
 
 [tool.setuptools.package-data]
 "kaa.kaasrc" = ["ressources/*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["kaa"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 200
+target-version = "py39"
+
+[tool.ruff.lint]
+# Start narrow: real correctness signals only (syntax errors, undefined
+# names, unused imports/vars). The existing codebase predates any style
+# convention, so a full pycodestyle ruleset would be all noise; broaden
+# this once the codebase has been swept separately.
+select = ["E9", "F"]

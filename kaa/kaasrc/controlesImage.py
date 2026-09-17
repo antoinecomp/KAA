@@ -8,13 +8,13 @@ from kaasrc.communs import colPrint
 try:
     import tensorflow.python.framework.ops as eTensor
     ISTENSORFLOW = True
-except Exception as err:
+except Exception:
     ISTENSORFLOW = False
 # ---------
 try:
     import torch
     ISTORCH = True
-except Exception as err:
+except Exception:
     ISTORCH = False
 # ---------
 

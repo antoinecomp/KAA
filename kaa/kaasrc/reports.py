@@ -831,7 +831,6 @@ def writeInferenceDictInReport(pInferencesDict, pRapport, pRepertFullReport, pNb
         pRapport = pRapport.replace("$DATA$", "\\section{" + keyToPlot + "}\n$DATA$")
 
         filenameSplit = filename.split(os.sep)
-        dirname = filenameSplit[pIndexSplit + 3]
         library = filenameSplit[pIndexSplit]
 
         repertImages = os.path.join("images", library, "dataInference")

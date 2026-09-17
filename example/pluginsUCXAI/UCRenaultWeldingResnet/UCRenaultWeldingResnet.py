@@ -38,7 +38,7 @@ def UC_createModel(pDictParams):
 
     # get data preprocess model file
     ficDataPreprocessModel = os.path.join(pUseCaseBase, pDataPreprocessModelpath, pDataPreprocessModelfile)
-    print(f"   .create Data Preprocess Model from '%s'"%ficDataPreprocessModel, flush=True)
+    print("   .create Data Preprocess Model from '%s'"%ficDataPreprocessModel, flush=True)
 
     # create model instance from 'model' parameter
     aiModel = UC_Model(ficModel, ficDataPreprocessModel, pXAIframework)

@@ -8,7 +8,7 @@ from kaasrc.communs import colPrint
 try:
     import torch
     ISTORCH = True
-except Exception as err:
+except Exception:
     ISTORCH = False
 # ---------
 
