@@ -422,6 +422,21 @@ class TUI:
         return self.appliTUI['VARIABLES'][pVariable]
 
     # ---------------------------------------------------------------------------------
+    ## Accessors added to give callers (kaaTUIapplication.py) a named surface
+    # instead of poking self.groupes / self.aides / self.appliTUI['VARIABLES']
+    # directly. Return the live objects, not copies: no behavior change.
+    def TUI_getGroupes(self):
+        return self.groupes
+
+    # ---------------------------------------------------------------------------------
+    def TUI_getAides(self):
+        return self.aides
+
+    # ---------------------------------------------------------------------------------
+    def TUI_getVariables(self):
+        return self.appliTUI['VARIABLES']
+
+    # ---------------------------------------------------------------------------------
     def TUI_nomCouleur(self,pFond,pTexte,pStyle):
         dicoCouleurs = {fRed:"fRed",fGreen:"fGreen",fYellow:"fYellow",fWhite:"fWhite",fBlue:"fBlue",fMagenta:"fMagenta",fCyan:"fCyan",fBlack:"fBlack",
                         fLBlack:"fLBlack",fLBlue:"fLBlue",fLCyan:"fLCyan",fLGreen:"fLGreen",fLMagenta:"fLMagenta",fLRed:"fLRed",fLWhite:"fLWhite",fLYellow:"fLYellow",
