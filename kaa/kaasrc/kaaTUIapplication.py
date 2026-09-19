@@ -770,8 +770,8 @@ class MenuTUI:
             for param in self.listeParams:
                 aide = "None"
                 pparam = param.replace('.', '')
-                if pparam in self.tui.aides:
-                    aide = self.tui.aides[pparam]
+                if pparam in self.tui.TUI_getAides():
+                    aide = self.tui.TUI_getAides()[pparam]
                 f.write('        , "%s": "%s"\n'%(param, aide))
             f.write("        }\n")
 
@@ -1042,7 +1042,7 @@ class MenuTUI:
         self._debug("        ", self.tui.TUI_getValeurParNom('cbxCasUsage', 'OPTIONS'))
 
         # On rend inactifs et invisibles l'ensemble des paramètres de toutes les cas d'usage
-        for cGroupe, vGroupe in self.tui.groupes.items():
+        for cGroupe, vGroupe in self.tui.TUI_getGroupes().items():
             self._debug("Desactivation du groupe '%s'."%cGroupe)
             if cGroupe.split('*')[0] == 'MODEL':
                 for idObjets in vGroupe:
@@ -1067,12 +1067,12 @@ class MenuTUI:
         colPrint("    %s"%usecase, pEcho=self.echo)
         groupe = "MODEL*%s"%usecase
         # On rend actifs et visibles l'ensemble des paramètres du groupe
-        if groupe not in self.tui.groupes:
+        if groupe not in self.tui.TUI_getGroupes():
             self._debug("Le groupe de paramètres '%s' n'est pas dans la liste suivante. Vérifier les correspondances de noms dans les plugins..."%groupe)
-            self._debug(', '.join(list(self.tui.groupes.keys())))
+            self._debug(', '.join(list(self.tui.TUI_getGroupes().keys())))
         else:
             self._debug("Activation du groupe '%s'."%groupe)
-            for idObjets in self.tui.groupes[groupe]:
+            for idObjets in self.tui.TUI_getGroupes()[groupe]:
                 self.tui.TUI_setValeurParId(idObjets, 'VISIBLE', 1)
                 self.tui.TUI_setValeurParId(idObjets, 'ACTIF', 1)
                 widget = self.tui.TUI_getWidgetParId(idObjets)
@@ -1083,7 +1083,7 @@ class MenuTUI:
                 if label in ['datatype', 'modeltype']:
                     # on desactive le widget
                     self.tui.TUI_setValeurParId(idObjets, 'ACTIF', 0)
-                    if label in self.tui.appliTUI['VARIABLES']:
+                    if label in self.tui.TUI_getVariables():
                         val = self.tui.TUI_getVariable(label)
                         self.tui.TUI_setValeurParId(idObjets, 'SELECT', widget['OPTIONS'].index(val))
 
@@ -1098,7 +1098,7 @@ class MenuTUI:
         self._debug("        ", self.tui.TUI_getValeurParNom('cbxMethode', 'OPTIONS'))
 
         # On rend inactifs et invisibles l'ensemble des paramètres de toutes les méthodes
-        for cGroupe, vGroupe in self.tui.groupes.items():
+        for cGroupe, vGroupe in self.tui.TUI_getGroupes().items():
             self._debug("Desactivation du groupe '%s'."%cGroupe)
             if cGroupe.split('*')[0] == 'METHODE':
                 for idObjets in vGroupe:
@@ -1127,12 +1127,12 @@ class MenuTUI:
         groupe = "METHODE*%s:%s"%(bibliotheque,methode)
 
         # On rend actifs et visibles l'ensemble des paramètres du groupe
-        if groupe not in self.tui.groupes:
+        if groupe not in self.tui.TUI_getGroupes():
             self._debug("Le groupe de paramètres '%s' n'est pas dans la liste suivante. Vérifier les correspondances de noms dans les plugins..."%groupe)
-            self._debug(', '.join(list(self.tui.groupes.keys())))
+            self._debug(', '.join(list(self.tui.TUI_getGroupes().keys())))
         else:
             self._debug("Activation du groupe '%s'."%groupe)
-            for idObjets in self.tui.groupes[groupe]:
+            for idObjets in self.tui.TUI_getGroupes()[groupe]:
                 self.tui.TUI_setValeurParId(idObjets, 'VISIBLE', 1)
                 self.tui.TUI_setValeurParId(idObjets, 'ACTIF', 1)
                 widget = self.tui.TUI_getWidgetParId(idObjets)
@@ -1143,7 +1143,7 @@ class MenuTUI:
                 if label in ['datatype', 'modeltype']:
                     # on desactive le widget
                     self.tui.TUI_setValeurParId(idObjets, 'ACTIF', 0)
-                    if label in self.tui.appliTUI['VARIABLES']:
+                    if label in self.tui.TUI_getVariables():
                         val = self.tui.TUI_getVariable(label)
                         self.tui.TUI_setValeurParId(idObjets, 'SELECT', widget['OPTIONS'].index(val))
 
@@ -1158,7 +1158,7 @@ class MenuTUI:
         self._debug("        ", self.tui.TUI_getValeurParNom('cbxMetrique', 'OPTIONS'))
 
         # On rend inactifs et invisibles l'ensemble des paramètres de toutes les métriques applicables
-        for cGroupe, vGroupe in self.tui.groupes.items():
+        for cGroupe, vGroupe in self.tui.TUI_getGroupes().items():
             if cGroupe.split('*')[0] == 'METRIQUE':
                 for idObjets in vGroupe:
                     self.tui.TUI_setValeurParId(idObjets, 'VISIBLE', 0)
@@ -1188,8 +1188,8 @@ class MenuTUI:
             groupe = "METRIQUE*%s:%s"%(bibliotheque,metrique)
 
             # On rend actifs et visibles l'ensemble des paramètres du groupe
-            if groupe in self.tui.groupes:
-                for idObjets in self.tui.groupes[groupe]:
+            if groupe in self.tui.TUI_getGroupes():
+                for idObjets in self.tui.TUI_getGroupes()[groupe]:
                     self.tui.TUI_setValeurParId(idObjets, 'VISIBLE', 1)
                     self.tui.TUI_setValeurParId(idObjets, 'ACTIF', 1)
 
