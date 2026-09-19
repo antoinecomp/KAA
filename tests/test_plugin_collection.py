@@ -121,3 +121,45 @@ class UCDemo_LibB(Plugin):
     collection.loadPluginsUCXAI(str(tmp_path))
 
     assert [type(p).__name__ for p in collection.plugins] == ["UCDemo_LibA"]
+
+
+def test_same_named_helper_files_in_different_plugin_dirs_collide(tmp_path):
+    """Characterizes a known hazard, it does not fix it: importPlugin() imports
+    plugin entry files by bare module name, sharing the process-wide sys.modules
+    cache. If two different use-case directories each ship a same-named helper
+    file (a realistic case for a generic name like preprocess_utils.py), the
+    entry file that gets discovered first "wins" that name for the rest of the
+    process; the second use case silently gets the first one's helper instead
+    of its own, with no error anywhere. This pins that behavior so a future fix
+    (see the plugin-architecture roadmap) has something to regress-test against.
+    """
+    write_plugin(tmp_path, "UCAlpha", "helper.py", "VALUE = 'alpha'\n")
+    write_plugin(tmp_path, "UCAlpha", "UCAlpha_Lib.py", """
+from kaasrc.plugin_collection import Plugin
+from helper import VALUE
+
+class UCAlpha_Lib(Plugin):
+    def __init__(self):
+        super().__init__()
+        self.value = VALUE
+""")
+    write_plugin(tmp_path, "UCBeta", "helper.py", "VALUE = 'beta'\n")
+    write_plugin(tmp_path, "UCBeta", "UCBeta_Lib.py", """
+from kaasrc.plugin_collection import Plugin
+from helper import VALUE
+
+class UCBeta_Lib(Plugin):
+    def __init__(self):
+        super().__init__()
+        self.value = VALUE
+""")
+
+    collection = PluginCollection()
+    collection.loadPluginsUCXAI(str(tmp_path))
+
+    values = {type(p).__name__: p.value for p in collection.plugins}
+    assert set(values) == {"UCAlpha_Lib", "UCBeta_Lib"}
+    # Both plugins should see their own use case's helper (VALUE would be
+    # "alpha" and "beta" respectively). Today they don't: whichever use case
+    # is discovered first silently wins `helper` for both of them.
+    assert values["UCAlpha_Lib"] == values["UCBeta_Lib"]
