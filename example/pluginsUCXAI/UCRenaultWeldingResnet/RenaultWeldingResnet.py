@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # -------------------------------------------------------------------------------
-import os, sys, PIL
+import PIL
 import numpy as np
 from collections import OrderedDict
 
 from kaasrc.communs import colPrint
-
-sys.path.append(os.path.dirname(__file__))
 
 # ---------
 try:
