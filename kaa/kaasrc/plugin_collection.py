@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # ===============================================================================
 
-import inspect, os, glob, sys
+import importlib, inspect, os, glob, sys
 
 # -------------------------------------------------------------------------------
 class Plugin(object):
@@ -61,13 +61,24 @@ class PluginCollection(object):
 
     # ---------------------------------------------------------------------------
     def importPlugin(self, package, ctrlVersion):
-        pluginDir = os.path.join(os.path.dirname(package))
-        if pluginDir not in sys.path:
-            sys.path.append(pluginDir)
-        useCase = str(pluginDir).rsplit(os.sep, maxsplit=1)[-1]
+        # Each plugin directory is imported as its own package (see the
+        # __init__.py living alongside every plugin) rather than as a bare
+        # top-level module: this is what lets a plugin's sibling helper
+        # files be reached with `from . import ...` without colliding, in
+        # sys.modules, with a same-named helper file in a different plugin
+        # directory. The parent directory (not the plugin directory itself)
+        # goes on sys.path, since it's the parent that must be searchable
+        # for the plugin's package name.
+        pluginDir = os.path.dirname(package)
+        parentDir = os.path.dirname(pluginDir)
+        if parentDir not in sys.path:
+            sys.path.append(parentDir)
+        packageName = os.path.basename(pluginDir)
+        useCase = packageName
         if (self.pluginsActive == "All") or (useCase in self.pluginsActive):
             if (self.pluginsDeactive == "") or (useCase not in self.pluginsDeactive):
-                pluginModule = __import__(os.path.basename(package).replace('.py', ''), fromlist=['blah'])
+                moduleBasename = os.path.basename(package).replace('.py', '')
+                pluginModule = importlib.import_module("%s.%s"%(packageName, moduleBasename))
                 clsmembers = inspect.getmembers(pluginModule, inspect.isclass)
                 self.addPlugin(clsmembers, pluginModule, ctrlVersion)
 

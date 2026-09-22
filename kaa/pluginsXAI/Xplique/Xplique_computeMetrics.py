@@ -9,7 +9,7 @@ import numpy as np
 from kaasrc.communs import colPrint
 import kaasrc.controles
 
-import Xplique_computeExplanations
+from . import Xplique_computeExplanations
 
 # ---------
 try:

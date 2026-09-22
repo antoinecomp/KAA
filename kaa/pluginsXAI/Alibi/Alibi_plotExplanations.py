@@ -6,7 +6,7 @@ import os
 
 import kaasrc.controles
 
-import Alibi_computeExplanations
+from . import Alibi_computeExplanations
 
 
 # ---------------------------------------------------------------------------

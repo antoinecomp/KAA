@@ -7,10 +7,10 @@ import os
 from kaasrc.communs import colPrint
 import kaasrc.plugin_collection
 
-import Xplique_computeExplanations
-import Xplique_plotExplanations
-import Xplique_computeMetrics
-import Xplique_plotMetrics
+from . import Xplique_computeExplanations
+from . import Xplique_plotExplanations
+from . import Xplique_computeMetrics
+from . import Xplique_plotMetrics
 
 # ---------
 try:

@@ -8,8 +8,8 @@ import numpy as np
 from kaasrc.communs import colPrint
 import kaasrc.plugin_collection
 
-import Shap_computeExplanations
-import Shap_plotExplanations
+from . import Shap_computeExplanations
+from . import Shap_plotExplanations
 
 # ---------
 # To control the library version

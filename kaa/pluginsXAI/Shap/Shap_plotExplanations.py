@@ -10,7 +10,7 @@ import inspect
 from kaasrc.communs import colPrint
 import kaasrc.controles
 
-import Shap_computeExplanations
+from . import Shap_computeExplanations
 
 # ---------
 # To control the library version

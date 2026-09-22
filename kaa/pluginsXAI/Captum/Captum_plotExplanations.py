@@ -8,7 +8,7 @@ import inspect
 
 import kaasrc.controles
 
-import Captum_computeExplanations
+from . import Captum_computeExplanations
 
 
 # ---------------------------------------------------------------------------

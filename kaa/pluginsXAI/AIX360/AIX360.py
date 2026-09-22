@@ -9,10 +9,10 @@ from kaasrc.communs import colPrint
 
 import kaasrc.plugin_collection
 
-import AIX360_computeExplanations
-import AIX360_plotExplanations
-import AIX360_computeMetrics
-import AIX360_plotMetrics
+from . import AIX360_computeExplanations
+from . import AIX360_plotExplanations
+from . import AIX360_computeMetrics
+from . import AIX360_plotMetrics
 
 # ---------
 # To control the library version

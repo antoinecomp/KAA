@@ -31,7 +31,7 @@ except Exception as err:
     colPrint("Package 'ultralytics' is not installed.", "Error")
 # ---------
 try:
-    from preprocess_utils import make_square_bbox_with_margin
+    from .preprocess_utils import make_square_bbox_with_margin
 except Exception as err:
     print("Error:", err)
     colPrint("Package yolo_utils unavailabled.", "Error")

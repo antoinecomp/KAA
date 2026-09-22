@@ -16,7 +16,7 @@ except Exception as err:
     colPrint("Package torch is uninstalled.", "Error")
 # ---------
 
-import UCRenaultWeldingResnet
+from . import UCRenaultWeldingResnet
 
 # -------------------------------------------------
 # ## Function that interfaces with a model to return specific output

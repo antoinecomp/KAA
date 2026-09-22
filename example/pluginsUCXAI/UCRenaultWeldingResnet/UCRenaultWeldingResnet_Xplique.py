@@ -5,7 +5,7 @@
 import kaasrc.plugin_collection
 import kaasrc.communs
 
-import UCRenaultWeldingResnet
+from . import UCRenaultWeldingResnet
 
 # ------------------------------------------------------------------------------
 ## Class for Use case vs Library

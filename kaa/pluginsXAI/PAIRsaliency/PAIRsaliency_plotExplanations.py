@@ -10,7 +10,7 @@ import inspect
 from kaasrc.communs import colPrint
 import kaasrc.controles
 
-import PAIRsaliency_computeExplanations
+from . import PAIRsaliency_computeExplanations
 
 # ---------
 # To control the library version

@@ -9,8 +9,8 @@ import numpy as np
 from kaasrc.communs import colPrint
 import kaasrc.plugin_collection
 
-import PAIRsaliency_computeExplanations
-import PAIRsaliency_plotExplanations
+from . import PAIRsaliency_computeExplanations
+from . import PAIRsaliency_plotExplanations
 
 # ---------
 try:

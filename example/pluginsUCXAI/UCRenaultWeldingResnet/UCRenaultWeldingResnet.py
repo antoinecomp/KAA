@@ -16,7 +16,7 @@ except Exception as err:
     colPrint("Packages torch,torchvision are uninstalled.", "Error")
 # ---------
 
-import RenaultWeldingResnet
+from . import RenaultWeldingResnet
 
 # -------------------------------------------------------------------------------
 ## Create an instance of the model

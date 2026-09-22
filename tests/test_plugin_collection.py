@@ -21,6 +21,7 @@ def isolate_plugin_imports():
 def write_plugin(root, dirname, filename, source):
     pluginDir = root / dirname
     pluginDir.mkdir(parents=True, exist_ok=True)
+    (pluginDir / "__init__.py").touch()
     (pluginDir / filename).write_text(source)
 
 
@@ -123,20 +124,21 @@ class UCDemo_LibB(Plugin):
     assert [type(p).__name__ for p in collection.plugins] == ["UCDemo_LibA"]
 
 
-def test_same_named_helper_files_in_different_plugin_dirs_collide(tmp_path):
-    """Characterizes a known hazard, it does not fix it: importPlugin() imports
-    plugin entry files by bare module name, sharing the process-wide sys.modules
-    cache. If two different use-case directories each ship a same-named helper
-    file (a realistic case for a generic name like preprocess_utils.py), the
-    entry file that gets discovered first "wins" that name for the rest of the
-    process; the second use case silently gets the first one's helper instead
-    of its own, with no error anywhere. This pins that behavior so a future fix
-    (see the plugin-architecture roadmap) has something to regress-test against.
+def test_same_named_helper_files_in_different_plugin_dirs_do_not_collide(tmp_path):
+    """Regression test for a fixed hazard: each plugin directory is now
+    imported as its own package (every real plugin ships an __init__.py;
+    write_plugin() does the same here), so two different use-case
+    directories shipping a same-named helper file (a realistic case for a
+    generic name like preprocess_utils.py) resolve `from .helper import
+    ...` against their own package instead of colliding in the shared
+    global sys.modules cache. This test used to pin the opposite
+    (undesirable) behavior before the import mechanism was fixed -- see
+    the plugin-architecture roadmap.
     """
     write_plugin(tmp_path, "UCAlpha", "helper.py", "VALUE = 'alpha'\n")
     write_plugin(tmp_path, "UCAlpha", "UCAlpha_Lib.py", """
 from kaasrc.plugin_collection import Plugin
-from helper import VALUE
+from .helper import VALUE
 
 class UCAlpha_Lib(Plugin):
     def __init__(self):
@@ -146,7 +148,7 @@ class UCAlpha_Lib(Plugin):
     write_plugin(tmp_path, "UCBeta", "helper.py", "VALUE = 'beta'\n")
     write_plugin(tmp_path, "UCBeta", "UCBeta_Lib.py", """
 from kaasrc.plugin_collection import Plugin
-from helper import VALUE
+from .helper import VALUE
 
 class UCBeta_Lib(Plugin):
     def __init__(self):
@@ -158,8 +160,4 @@ class UCBeta_Lib(Plugin):
     collection.loadPluginsUCXAI(str(tmp_path))
 
     values = {type(p).__name__: p.value for p in collection.plugins}
-    assert set(values) == {"UCAlpha_Lib", "UCBeta_Lib"}
-    # Both plugins should see their own use case's helper (VALUE would be
-    # "alpha" and "beta" respectively). Today they don't: whichever use case
-    # is discovered first silently wins `helper` for both of them.
-    assert values["UCAlpha_Lib"] == values["UCBeta_Lib"]
+    assert values == {"UCAlpha_Lib": "alpha", "UCBeta_Lib": "beta"}

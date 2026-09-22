@@ -12,7 +12,7 @@ import kaasrc.plugin_collection
 import kaasrc.communs
 import kaasrc.controles
 
-import AIX360_computeExplanations
+from . import AIX360_computeExplanations
 
 # ---------
 try:

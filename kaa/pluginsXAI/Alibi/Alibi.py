@@ -7,8 +7,8 @@ import os
 from kaasrc.communs import colPrint
 import kaasrc.plugin_collection
 
-import Alibi_computeExplanations
-import Alibi_plotExplanations
+from . import Alibi_computeExplanations
+from . import Alibi_plotExplanations
 
 # ---------
 # To control the library version

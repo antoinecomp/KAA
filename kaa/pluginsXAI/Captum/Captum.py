@@ -6,8 +6,8 @@ import os
 from kaasrc.communs import colPrint
 import kaasrc.plugin_collection
 
-import Captum_computeExplanations
-import Captum_plotExplanations
+from . import Captum_computeExplanations
+from . import Captum_plotExplanations
 
 # ---------
 try:
