@@ -17,3 +17,10 @@ venv/
 .DS_Store
 .idea/
 .vscode/
+
+# Runtime state kaa.py writes to the current working directory
+# (TUI config/palette persistence, per-run parameter export) regardless
+# of -r/--resultProd -- created wherever kaa.py happens to be launched from.
+tuiKaa.cfg
+tuiKaa.pal
+kaaJson/
